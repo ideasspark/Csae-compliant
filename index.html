@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Child Safety Standards (CSAE)</title>
+  <meta name="description" content="Public page describing policies, reporting flow and technical controls to prevent child sexual abuse and exploitation (CSAE)." />
+  <style>
+    :root{--bg:#f7fafc;--card:#ffffff;--muted:#6b7280;--accent:#0ea5e9;--maxw:980px}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial; background:var(--bg); color:#0f172a}
+    .wrap{max-width:var(--maxw);margin:32px auto;padding:20px}
+    header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+    h1{font-size:1.6rem;margin:0}
+    p.lead{margin:6px 0 0;color:var(--muted)}
+    nav a{margin-left:12px;color:var(--accent);text-decoration:underline;font-size:0.95rem}
+
+    main{margin-top:22px;display:grid;grid-template-columns:1fr;gap:18px}
+    section.card{background:var(--card);padding:18px;border-radius:10px;box-shadow:0 1px 3px rgba(2,6,23,0.06)}
+    h2{margin:0 0 8px;font-size:1.15rem}
+    ul{margin:8px 0 0 20px;color:#0f172a}
+    .grid-2{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:760px){.grid-2{grid-template-columns:1fr 1fr}}
+
+    form label{display:block;margin-top:8px;font-size:0.95rem}
+    input[type=text],input[type=email],textarea{width:100%;padding:10px;border:1px solid #e6eef6;border-radius:6px;margin-top:6px;font-size:0.95rem}
+    .btn-row{display:flex;gap:10px;align-items:center;margin-top:12px}
+    button.primary{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+    a.link{color:var(--accent);text-decoration:underline;font-size:0.95rem}
+
+    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:0.85rem}
+    .muted{color:var(--muted);font-size:0.95rem}
+    .notice{font-size:0.9rem;color:#dc2626}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Safety & Reporting — Child Safety (CSAE)</h1>
+        <p class="lead">Public page describing policies, reporting flow and technical measures to prevent child sexual abuse and exploitation.</p>
+      </div>
+      <nav>
+        <a href="#policy">Policy</a>
+        <a href="#report">Report</a>
+        <a href="#controls">Controls</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="policy" class="card">
+        <h2>Public Policy Summary</h2>
+        <p class="muted">We prohibit any content that sexualizes minors or facilitates sexual exploitation. This includes CSAM, grooming, and instructions for illegal sexual activity involving minors.</p>
+        <div class="grid-2" style="margin-top:12px">
+          <div>
+            <h3 style="margin:0 0 6px">Prohibited Content</h3>
+            <ul>
+              <li>Images or videos of sexual acts involving minors (CSAM).</li>
+              <li>Sexual descriptions, encouragement, or instructions involving minors.</li>
+              <li>Grooming, solicitation, or facilitation of abuse.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="margin:0 0 6px">Allowed Content (Examples)</h3>
+            <ul>
+              <li>Non‑sexual references to minors (e.g., education or parenting).</li>
+              <li>Educational material about child protection and safety.</li>
+              <li>Legal reporting and victim support content.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="muted" style="margin-top:12px;font-size:0.88rem">Note: This page is a public policy summary — legal and internal processes appear further below.</p>
+      </section>
+
+      <section id="report" class="card">
+        <h2>Report an Incident</h2>
+        <p class="muted">If you encounter suspected CSAE content, please report it. Do not upload illegal imagery or video through this public form — contact a secure intake channel or law enforcement instead.</p>
+
+        <form id="reportForm" aria-labelledby="report" onsubmit="handleReport(event)">
+          <label for="itemUrl">URL / Content ID (if available)</label>
+          <input id="itemUrl" name="itemUrl" type="text" placeholder="https://... or internal‑id" />
+
+          <label for="description">Short Description</label>
+          <textarea id="description" name="description" rows="4" placeholder="Describe why the content is concerning"></textarea>
+
+          <label>Do you believe the content involves a minor?</label>
+          <label><input type="radio" name="minor" value="yes"> Yes</label>
+          <label style="margin-left:12px"><input type="radio" name="minor" value="no" checked> No / Unsure</label>
+
+          <label for="email">Contact Email (Optional)</label>
+          <input id="email" name="email" type="email" placeholder="mail@you.com" />
+
+          <div class="btn-row">
+            <button type="submit" class="primary">Submit Report</button>
+            <a class="link" href="mailto:abuse@example.com">Security Contact (Email)</a>
+          </div>
+
+          <p class="notice">Do not upload illicit files to this form. If you possess evidentiary files, contact law enforcement or a secure intake channel.</p>
+        </form>
+
+      </section>
+
+      <section id="controls" class="card">
+        <h2>Technical Controls & Processes</h2>
+        <ol>
+          <li><strong>Automated Detection:</strong> perceptual hashing (PDQ/PhotoDNA) and ML classifiers. Low‑confidence matches are escalated to manual review.</li>
+          <li><strong>Manual Review & Escalation:</strong> trained reviewers redact sensitive data and escalate confirmed CSAM to law enforcement.</li>
+          <li><strong>Minimized Storage:</strong> store metadata and hashes when possible; sensitive files stay in restricted, audited environments.</li>
+          <li><strong>Reporting & Cooperation:</strong> workflows to hotlines (NCMEC, national hotlines) and law enforcement based on jurisdiction.</li>
+        </ol>
+
+        <h3 style="margin-top:10px">Implementation Guidance for Engineers</h3>
+        <ul>
+          <li>Never store CSAM in public buckets; use secure intake channels with chain‑of‑custody logging.</li>
+          <li>Compute hashes safely and compare against known‑bad databases.</li>
+          <li>Restrict access and maintain immutable audit logs.</li>
+          <li>Provide reviewer wellbeing support and safe tooling.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Contact & External Resources</h2>
+        <p class="muted">If you are reporting an emergency, contact local law enforcement immediately.</p>
+        <ul>
+          <li>U.S.: NCMEC — National Center for Missing & Exploited Children.</li>
+          <li>EU / Countries: National child protection hotlines (add real links in production).</li>
+        </ul>
+        <p style="margin-top:8px">Organization Contact: <a href="mailto:abuse@example.com">abuse@example.com</a></p>
+        <p class="muted" style="margin-top:6px">Note: Replace placeholder contacts before production.</p>
+      </section>
+
+    </main>
+
+    <footer>
+      <p>© <span id="year"></span> Example Company — Template page. Customize content according to your jurisdiction.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    function handleReport(e){
+      e.preventDefault();
+      const form = e.target;
+      const payload = {
+        itemUrl: form.itemUrl.value || null,
+        description: form.description.value || null,
+        reporterEmail: form.email.value || null,
+        suspectedMinor: form.minor.value === 'yes',
+        timestamp: new Date().toISOString()
+      };
+      console.log('Report payload (demo):', payload);
+      alert('Report submitted (demo). In production this will be sent to a secure intake API.');
+      form.reset();
+    }
+  </script>
+</body>
+</html>
